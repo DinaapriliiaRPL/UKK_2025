@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ukk_dinakasir/main.dart';
+import 'package:ukk_dinakasir/produk/indexproduk.dart';
+import 'package:ukk_dinakasir/registrasi/indexuser.dart';
 
 class homepage extends StatefulWidget {
   const homepage({super.key});
@@ -43,6 +46,62 @@ class _homepageState extends State<homepage> {
           foregroundColor: Colors.white,
           title: const Text("D'Qasir"),
           centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              _scaffoldKey.currentState
+              ?.openDrawer(); // membuka drawer dg key
+            },
+          ),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.brown[600],
+                ),
+                child: Text(
+                  'Menu',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Beranda'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.app_registration),
+                title: Text('Registrasi'),
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => userpage())
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.arrow_back),
+                title: Text('Logout'),
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyApp())
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [indexproduk()],
         ),
       ),
     );

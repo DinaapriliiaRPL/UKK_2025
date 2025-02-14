@@ -13,15 +13,17 @@ class _loginpageState extends State<loginpage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final List<Map<String, dynamic>> dummyUsers = [
-    {'username': 'Dina', 'password':12345},
-  ];
+  final SupabaseClient supabase = Supabase.instance.client;
+  // final List<Map<String, dynamic>> dummyUsers = [
+  //   {'username': 'Dina', 'password':12345},
+  // ];
 
   Future<void> _login() async {
-    if (_formKey.currentState!.validate()) {
-      final username = _usernameController.text;
-      final password = _passwordController.text;
+    final username = _usernameController.text;
+    final password = _passwordController.text;
 
+    if (_formKey.currentState!.validate()) {
+      
       // if (response!= null) {
       //   Navigator.pushReplacement(context,
       //   MaterialPageRoute(builder: (context) => homepage()),
@@ -30,7 +32,34 @@ class _loginpageState extends State<loginpage> {
       //   Navigator.pushReplacement(context, 
       //   MaterialPageRoute(builder: (context) => homepage()))
       // }
-    }
+    } 
+    
+    // try {
+      final response = await supabase
+      .from('user')
+      .select('username, password')
+      .eq('username', username)
+      .single();
+
+      if (response != null && response['password'] == password) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login Berhasil')),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => homepage()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Username atau Password salah')),
+        );
+      }
+
+    // } catch (e) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Terjadi kesalahan: $e')),
+    //   );
+    // }
   }
 
   @override
@@ -60,7 +89,7 @@ class _loginpageState extends State<loginpage> {
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   labelText: 'Username',
-                  border: OutlineInputBorder(),
+                 border: OutlineInputBorder(), 
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {

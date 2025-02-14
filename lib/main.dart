@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ukk_dinakasir/login.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(
+    url: 'https://etbpvgqmtorgwrhhnkpl.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0YnB2Z3FtdG9yZ3dyaGhua3BsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0MDg4NTUsImV4cCI6MjA1NDk4NDg1NX0.BxyoYtqMhu_ERiFedX0NMdpxeazFjJivY2u-Qdj_xdY'
+  );
   runApp(const MyApp());
 }
 
@@ -44,15 +49,16 @@ class MyHomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "WELCOME in D'Qasir",
+                        "WELCOME",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 30,
-                          fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Georgea'
                         ),
                       ),
                       Text(
-                        "aplikasi ini adalah halaman web resmi dari brand D'Qasir, yang menyediakan layanan berbelanja secara online",
+                        "D'Qasir",
                          style: TextStyle(
                           color: Colors.white,
                           fontSize: 15
