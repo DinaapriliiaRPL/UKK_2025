@@ -29,82 +29,153 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topCenter, colors:[
+      // backgroundColor: Colors.orange.shade100,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter, colors:[
               Color(0xFF6D4C41),
               Color(0XFF8D6E63),
               Color(0xFFBCAAA4)
             ]),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "WELCOME",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Georgea'
-                        ),
-                      ),
-                      Text(
-                        "D'Qasir",
-                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15
-                        ),
-                      ),
-                      Image.asset(
-                        'assets/image/boba.png',
-                        height: 300,
-                        width: 500,
-                      )
-                    ],
-                  )
-                )
-              ),
-              Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                        builder: (context) => loginpage(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    minimumSize: Size(double.infinity, 50),
-                  ),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                  ),
+        
+      
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(160.0),
+                  child: Image.asset(
+                  'assets/image/bobaaaaa.png',
+                  height: 250,
+                  width: 150,
+                  fit: BoxFit.cover),
                 ),
-                
-              )
-            ],
-          ),
+              ],
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Times UBoba',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.brown[900],
+              ),
+            ),
+            Text(
+              'segerrrr',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.brown.shade700,
+              ),
+            ),
+            SizedBox(height: 30),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.brown[10],
+                minimumSize: Size(200, 50),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => loginpage(),
+                  ),
+                );
+              },
+              child: Text('Login', style: TextStyle(fontSize: 18, color: Colors.black)),
+            ),
+          ],
         ),
       ),
-    );
+      )
+      );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: Center(
+  //       child: Container(
+  //         padding: EdgeInsets.symmetric(vertical: 20),
+  //         decoration: BoxDecoration(
+  //           gradient: LinearGradient(begin: Alignment.topCenter, colors:[
+  //             Color(0xFF6D4C41),
+  //             Color(0XFF8D6E63),
+  //             Color(0xFFBCAAA4)
+  //           ]),
+  //         ),
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: <Widget>[
+  //             Center(
+  //               child: Padding(
+  //                 padding: EdgeInsets.all(20),
+  //                 child: Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.center,
+  //                   children: <Widget>[
+  //                     Text(
+  //                       "WELCOME",
+  //                       style: TextStyle(
+  //                         color: Colors.white,
+  //                         fontSize: 30,
+  //                         fontWeight: FontWeight.bold,
+  //                         fontFamily: 'Georgea'
+  //                       ),
+  //                     ),
+  //                     Text(
+  //                       "D'Qasir",
+  //                        style: TextStyle(
+  //                         color: Colors.white,
+  //                         fontSize: 15
+  //                       ),
+  //                     ),
+  //                     Image.asset(
+  //                       'assets/image/boba.png',
+  //                       height: 300,
+  //                       width: 500,
+  //                     )
+  //                   ],
+  //                 )
+  //               )
+  //             ),
+  //             Padding(
+  //               padding: const EdgeInsets.all(50.0),
+  //               child: ElevatedButton(
+  //                 onPressed: () {
+  //                   Navigator.push(
+  //                     context, 
+  //                     MaterialPageRoute(
+  //                       builder: (context) => loginpage(),
+  //                     ),
+  //                   );
+  //                 },
+  //                 style: ElevatedButton.styleFrom(
+  //                   backgroundColor: Colors.white,
+  //                   shape: RoundedRectangleBorder(
+  //                     borderRadius: BorderRadius.circular(10),
+  //                   ),
+  //                   minimumSize: Size(double.infinity, 50),
+  //                 ),
+  //                 child: Text(
+  //                   'Login',
+  //                   style: TextStyle(
+  //                     color: Colors.black,
+  //                     fontSize: 15,
+  //                     fontWeight: FontWeight.bold),
+  //                 ),
+  //               ),
+                
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

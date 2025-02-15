@@ -170,8 +170,10 @@ class _userpageState extends State<userpage> {
           Navigator.push(context,MaterialPageRoute(builder: (context) => insertuser()));
         },
         child: Icon(
-          Icons.add, color: Colors.brown[400],
-        )
+          Icons.add, 
+          color: Colors.brown[300],
+        ),
+        backgroundColor: Colors.brown[600],
       )
     );
   }

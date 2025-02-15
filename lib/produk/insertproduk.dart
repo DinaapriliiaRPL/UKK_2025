@@ -44,8 +44,18 @@ class _insertprodukState extends State<insertproduk> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Tambah Produk'),
+      appBar: AppBar(backgroundColor: Colors.brown[600],
+        title: const Text(
+          'Tambah Produk',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left, color: Colors.white,),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ukk_dinakasir/detailpenjualan/indexdetail.dart';
 import 'package:ukk_dinakasir/main.dart';
+import 'package:ukk_dinakasir/pelanggan/indexpelanggan.dart';
+import 'package:ukk_dinakasir/penjualan/indexpenjualan.dart';
 import 'package:ukk_dinakasir/produk/indexproduk.dart';
 import 'package:ukk_dinakasir/registrasi/indexuser.dart';
 
@@ -101,7 +104,7 @@ class _homepageState extends State<homepage> {
           ),
         ),
         body: TabBarView(
-          children: [indexproduk()],
+          children: [indexproduk(), indexpelanggan(), indexpenjualan(), indexdetail()],
         ),
       ),
     );
