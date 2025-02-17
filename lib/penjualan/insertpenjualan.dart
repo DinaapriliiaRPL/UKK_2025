@@ -17,6 +17,9 @@ class _insertpenjualanState extends State<insertpenjualan> {
   final SingleValueDropDownController produkController =
       SingleValueDropDownController();
   final TextEditingController quantityController = TextEditingController();
+  
+  final _formKey = GlobalKey<FormState>();
+  
   List myproduct = [];
   List user = [];
 
@@ -50,6 +53,7 @@ class _insertpenjualanState extends State<insertpenjualan> {
   }
 
   void addPelanggan() {
+
     final String name = nameController.dropDownValue!.value;
     final int quantity = int.parse(quantityController.text);
     print('Pelanggan Name: $name, Quantity: $quantity');
@@ -66,7 +70,9 @@ class _insertpenjualanState extends State<insertpenjualan> {
     Navigator.of(context).pop();
   }
 
-  executeSales() async {
+  void executeSales() async {
+    if(!_formKey.currentState!.validate()) return;
+
     var penjualan = await Supabase.instance.client
         .from('penjualan')
         .insert([
@@ -104,8 +110,22 @@ class _insertpenjualanState extends State<insertpenjualan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.brown[600],
+        title: const Text('Tambah Data', style: TextStyle(color: Colors.white),),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left, color: Colors.white), // Ganti ikon panah menjadi '<'
+          onPressed: () {
+            Navigator.pop(
+                context, true); // Fungsi untuk kembali ke halaman sebelumnya
+          },
+        ),
+      ),
       body: Padding(
          padding: const EdgeInsets.all(16.0),
+         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               DropDownTextField(
@@ -114,10 +134,21 @@ class _insertpenjualanState extends State<insertpenjualan> {
                     return DropDownValueModel(
                         name: user[index]['NamaPelanggan'], value: user[index]);
                   })
+                  
                 ],
                 controller: nameController,
-                textFieldDecoration: InputDecoration(labelText: "Select User"),
+                textFieldDecoration: InputDecoration(
+                  labelText: "Select User",
+                  border: OutlineInputBorder()
+                ),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Pelanggan tidak boleh kosong' ;
+                  }
+                  return null;
+                },
               ),
+              SizedBox(height: 16),
               DropDownTextField(
                 dropDownList: [
                   ...List.generate(myproduct.length, (index) {
@@ -128,13 +159,39 @@ class _insertpenjualanState extends State<insertpenjualan> {
                 ],
                 controller: produkController,
                 textFieldDecoration:
-                    InputDecoration(labelText: "Select Produk"),
+                    InputDecoration(
+                      labelText: "Select Produk",
+                      border: OutlineInputBorder()
+                    ),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Produk tidak boleh kosong';
+                  }
+                  return null;
+                },
               ),
-              TextField(
+              SizedBox(height: 16),
+              TextFormField(
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 controller: quantityController,
-                decoration: InputDecoration(labelText: 'Jumlah'),
+                decoration: InputDecoration(
+                  labelText: 'Jumlah',
+                  border: OutlineInputBorder()
+                ),
                 keyboardType: TextInputType.number,
+                
+
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Jumlah tidak boleh kosong';
+                  }
+                  if (int.tryParse(value) == null || int.parse(value) <= 0) {
+                    return 'Jumlah harus lebih besar dari 0';
+                  }
+                  return null;
+                },
+              
+
               ),
               SizedBox(height: 20),
               ElevatedButton(
@@ -145,6 +202,7 @@ class _insertpenjualanState extends State<insertpenjualan> {
               ),
             ],
           ),
+         ),
       ),
     );
   }

@@ -64,14 +64,14 @@ class MyHomePage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: Colors.brown[900],
+                color: Colors.white,
               ),
             ),
             Text(
               'segerrrr',
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.brown.shade700,
+                color: Colors.white,
               ),
             ),
             SizedBox(height: 30),
@@ -88,7 +88,7 @@ class MyHomePage extends StatelessWidget {
                   ),
                 );
               },
-              child: Text('Login', style: TextStyle(fontSize: 18, color: Colors.black)),
+              child: Text('Login', style: TextStyle(fontSize: 17, color: Colors.black)),
             ),
           ],
         ),
