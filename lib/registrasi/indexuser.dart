@@ -132,77 +132,75 @@ class _userpageState extends State<userpage> {
             // ),
             // User cards
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(10),
-                itemCount: userFiltered.length, // Gunakan userFiltered
-                itemBuilder: (context, index) {
-                  final userdata = userFiltered[index]; // Gunakan userFiltered
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                      child: Row(
-                        children: [
-                          Expanded(flex: 2, child: Text(userdata['username'] ?? '')),
-                          Expanded(flex: 2, child: Text(userdata['password'] ?? '')),
-                          Expanded(flex: 1, child: Text(userdata['role'] ?? '')),
-                          Expanded(
-                            flex: 1,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    final id = userdata['id'] ?? 0;
-                                    if (id != 0) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => updateuser(id: id),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  icon: const Icon(Icons.edit, color: Colors.blue),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: const Text('Hapus user'),
-                                          content: const Text('Apakah anda yakin menghapus user?'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: const Text('Batal'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                                deleteuser(userdata['id']);
-                                              },
-                                              child: const Text('Hapus'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                  icon: const Icon(Icons.delete, color: Colors.red),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+  child: ListView.builder(
+    padding: const EdgeInsets.all(10),
+    itemCount: userFiltered.length, // Use userFiltered
+    itemBuilder: (context, index) {
+      final userdata = userFiltered[index]; // Use userFiltered
+      return Card(
+        child: ListTile(
+          title: Text(userdata['username'] ?? ''),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(userdata['password'] ?? ''),
+              Text(userdata['role'] ?? ''),
+            ],
+          ),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                onPressed: () {
+                  final id = userdata['id'] ?? 0;
+                  if (id != 0) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => updateuser(id: id),
                       ),
-                    ),
+                    );
+                  }
+                },
+                icon: const Icon(Icons.edit, color: Colors.blue),
+              ),
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Hapus user'),
+                        content: const Text('Apakah anda yakin menghapus user?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Batal'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              deleteuser(userdata['id']);
+                            },
+                            child: const Text('Hapus'),
+                          ),
+                        ],
+                      );
+                    },
                   );
                 },
+                icon: const Icon(Icons.delete, color: Colors.red),
               ),
-            ),
+            ],
+          ),
+        ),
+      );
+    },
+  ),
+)
+
           ],
         ),
     floatingActionButton: FloatingActionButton(

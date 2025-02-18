@@ -50,8 +50,16 @@ class _cetakpdfState extends State<cetakpdf> {
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              pw.Text("Riwayat Transaksi", style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+              pw.Align(
+                alignment: pw.Alignment.center,
+                child: pw.Text("D'Qasir Store", style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+              ),
               pw.SizedBox(height: 10),
+              pw.Align(
+                alignment: pw.Alignment.center,
+                child: pw.Text("JL.Lolaras no.7,Malang,Jawa Timur", style: pw.TextStyle(fontSize: 15)),
+              ),
+              pw.SizedBox(height: 30),
               pw.Text("Pelanggan: ${responseSales['pelanggan']['NamaPelanggan']}", style: pw.TextStyle(fontSize: 18)),
               pw.Text("Tanggal: ${responseSales['TanggalPenjualan']}", style: pw.TextStyle(fontSize: 16)),
               pw.SizedBox(height: 10),
