@@ -14,12 +14,22 @@ class _insertprodukState extends State<insertproduk> {
   final _harga = TextEditingController();
   final _stok = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  
 
+  
    Future<void> produk() async{
     if (_formKey.currentState!.validate()) {
       final NamaProduk = _nmprd.text;
       final Harga = _harga.text ;
       final Stok = _stok.text ;
+
+      // final cekProduk = await Supabase.instance.client
+      //       .from('produk')
+      //       .select()
+      //       .eq('NamaProduk', NamaProduk)
+      //       .single();
+      
+
 
       final response = await Supabase.instance.client.from('produk').insert([
         {

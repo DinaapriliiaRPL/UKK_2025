@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:ukk_dinakasir/registrasi/indexuser.dart';
@@ -6,17 +9,31 @@ class insertuser extends StatefulWidget {
   const insertuser({super.key});
 
   @override
-  State<insertuser> createState() => _insertuserState();
+  State<insertuser> createState() => _InsertUserState();
 }
 
-class _insertuserState extends State<insertuser> {
+class _InsertUserState extends State<insertuser> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _username = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _role = TextEditingController();
 
-  //method utk insert data user ke supabases
-  Future<void> _adduser() async {
+  // Fungsi untuk membuat salt acak
+  String generateSalt() {
+    final random = Random.secure();
+    final values = List<int>.generate(16, (i) => random.nextInt(256));
+    return base64Url.encode(values);
+  }
+
+  // Fungsi untuk hash password dengan salt
+  String hashPasswordWithSalt(String password, String salt) {
+    final bytes = utf8.encode(password + salt);
+    final digest = sha256.convert(bytes);
+    return digest.toString();
+  }
+
+  // Method untuk insert user dengan password terenkripsi
+  Future<void> _addUser() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -25,19 +42,23 @@ class _insertuserState extends State<insertuser> {
     final password = _password.text;
     final role = _role.text;
 
-    //validasi input
-    if (username.isEmpty || password.isEmpty) {
+    if (username.isEmpty || password.isEmpty || role.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Semua wajib diisi')),
+        SnackBar(content: Text('Semua bidang wajib diisi')),
       );
       return;
     }
 
+    // Generate salt unik dan hash password
+    final salt = generateSalt();
+    final hashedPassword = hashPasswordWithSalt(password, salt);
+
     final response = await Supabase.instance.client.from('user').insert([
       {
         'username': username,
-        'password': password,
-        'role': 'petugas',
+        'password': hashedPassword, // Simpan password yang sudah di-hash
+        'salt': salt, // Simpan salt agar bisa digunakan saat login
+        'role': role,
       }
     ]);
 
@@ -51,17 +72,18 @@ class _insertuserState extends State<insertuser> {
       );
     }
 
-    //jika form sudah selesai input maka kosongkan form dg cara perintah ini
+    // Kosongkan form setelah berhasil menambahkan user
     _username.clear();
     _password.clear();
+    _role.clear();
 
-    //navigasi jika kembali ke halaman sebelumnya dan refresh list
+    // Kembali ke halaman daftar user
     Navigator.pop(context, true);
     Navigator.pushReplacement(
-      context, MaterialPageRoute(builder: (context) => userpage())
+      context,
+      MaterialPageRoute(builder: (context) => userpage()),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +96,7 @@ class _insertuserState extends State<insertuser> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.chevron_left, color: Colors.white,),
+          icon: const Icon(Icons.chevron_left, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -90,7 +112,7 @@ class _insertuserState extends State<insertuser> {
                 controller: _username,
                 decoration: InputDecoration(
                   labelText: 'Username',
-                  border: OutlineInputBorder()
+                  border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -102,9 +124,10 @@ class _insertuserState extends State<insertuser> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _password,
+                obscureText: true, // Sembunyikan password saat diketik
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder()
+                  border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -113,33 +136,33 @@ class _insertuserState extends State<insertuser> {
                   return null;
                 },
               ),
-              const SizedBox( height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _role,
                 decoration: const InputDecoration(
                   labelText: 'Role',
-                  border: OutlineInputBorder()
+                  border: OutlineInputBorder(),
                 ),
                 validator: (value) {
-                  if(value == null || value.isEmpty) {
+                  if (value == null || value.isEmpty) {
                     return 'Role tidak boleh kosong';
                   }
                   return null;
                 },
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    _adduser();
+                    _addUser();
                   }
                 },
                 child: Text('Tambah User'),
-              )
+              ),
             ],
-          )
+          ),
         ),
-      )
+      ),
     );
   }
 }

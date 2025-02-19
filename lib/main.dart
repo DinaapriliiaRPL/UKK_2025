@@ -67,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
             style: GoogleFonts.dancingScript(
               fontSize: 40,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         ),
@@ -98,9 +98,23 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
+            
+            Text(
+              'Times UrBoba',
+              style: GoogleFonts.aDLaMDisplay(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+             SizedBox(height: 10),
+            Text(
+              '"Boba tidak membawa kata, Tapi membawa rasa"',
+              style: GoogleFonts.abrilFatface(
+                fontSize: 14,
+                color: Colors.white,
+              ),
+            ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(160.0),
                   child: Image.asset(
@@ -109,25 +123,7 @@ class MyHomePage extends StatelessWidget {
                   width: 150,
                   fit: BoxFit.cover),
                 ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Times UBoba',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            Text(
-              'segerrrr',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 30),
+            SizedBox(height: 50),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.brown[10],

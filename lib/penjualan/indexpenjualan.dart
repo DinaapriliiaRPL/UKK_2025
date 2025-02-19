@@ -58,6 +58,11 @@ class _indexpenjualanState extends State<indexpenjualan> {
       }).toList();
     });
   }
+  
+  String formatCurrency(dynamic value) {
+    final formatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 2);
+    return formatter.format(value ?? 0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +124,7 @@ class _indexpenjualanState extends State<indexpenjualan> {
                         ),
                       ),
                       subtitle: Text(
-                        'Total harga: ${item['TotalHarga']}\nTanggal: ${item['date']}',
+                        'Total harga: ${formatCurrency(item['TotalHarga'])}\nTanggal: ${item['date']}',
                         style: TextStyle(
                           fontSize: 14.0,
                           color: Colors.grey[600],

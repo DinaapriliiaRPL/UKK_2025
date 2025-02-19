@@ -132,102 +132,101 @@ class _userpageState extends State<userpage> {
             // ),
             // User cards
             Expanded(
-  child: ListView.builder(
-    padding: const EdgeInsets.all(10),
-    itemCount: userFiltered.length, // Use userFiltered
-    itemBuilder: (context, index) {
-      final userdata = userFiltered[index]; // Use userFiltered
-      return Card(
-        child: ListTile(
-          title: Text(userdata['username'] ?? ''),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(userdata['password'] ?? ''),
-              Text(userdata['role'] ?? ''),
-            ],
-          ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                onPressed: () {
-                  final id = userdata['id'] ?? 0;
-                  if (id != 0) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => updateuser(id: id),
+              child: ListView.builder(
+                padding: const EdgeInsets.all(10),
+                itemCount: userFiltered.length, // Use userFiltered
+                itemBuilder: (context, index) {
+                  final userdata = userFiltered[index]; // Use userFiltered
+                  return Card(
+                    child: ListTile(
+                      title: Text(userdata['username'] ?? ''),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(userdata['password'] ?? ''),
+                          Text(userdata['role'] ?? ''),
+                        ],
                       ),
-                    );
-                  }
-                },
-                icon: const Icon(Icons.edit, color: Colors.blue),
-              ),
-              IconButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Hapus user'),
-                        content: const Text('Apakah anda yakin menghapus user?'),
-                        actions: [
-                          TextButton(
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
                             onPressed: () {
-                              Navigator.pop(context);
+                              final id = userdata['id'] ?? 0;
+                              if (id != 0) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => updateuser(id: id),
+                                  ),
+                                );
+                              }
                             },
-                            child: const Text('Batal'),
+                            icon: const Icon(Icons.edit, color: Colors.blue),
                           ),
-                          TextButton(
+                          IconButton(
                             onPressed: () {
-                              Navigator.pop(context);
-                              deleteuser(userdata['id']);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Hapus user'),
+                                    content: const Text('Apakah anda yakin menghapus user?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Batal'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          deleteuser(userdata['id']);
+                                        },
+                                        child: const Text('Hapus'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             },
-                            child: const Text('Hapus'),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                           ),
                         ],
-                      );
-                    },
+                      ),
+                    ),
                   );
                 },
-                icon: const Icon(Icons.delete, color: Colors.red),
               ),
+            )
             ],
           ),
-        ),
-      );
-    },
-  ),
-)
-
-          ],
-        ),
-    floatingActionButton: FloatingActionButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => insertuser()),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => insertuser()),
+              );
+            },
+            child: Icon(
+              Icons.add, 
+              color: Colors.brown[300],
+            ),
+            backgroundColor: Colors.brown[600],
+          ),
         );
-      },
-      child: Icon(
-        Icons.add, 
-        color: Colors.brown[300],
-      ),
-      backgroundColor: Colors.brown[600],
-    ),
-  );
-}
+  }
 
-// Fungsi untuk mencari user berdasarkan kata kunci pencarian
-void searchUser(String query) {
-  setState(() {
-    userFiltered = user.where((userdata) {
-      return userdata['username']
-          .toLowerCase()
-          .contains(query.toLowerCase());
-    }).toList();
-  });
-}
+  // Fungsi untuk mencari user berdasarkan kata kunci pencarian
+  void searchUser(String query) {
+    setState(() {
+      userFiltered = user.where((userdata) {
+        return userdata['username']
+            .toLowerCase()
+            .contains(query.toLowerCase());
+      }).toList();
+    });
+  }
 
 }

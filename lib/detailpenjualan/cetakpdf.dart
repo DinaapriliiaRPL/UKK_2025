@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -30,6 +31,7 @@ class _cetakpdfState extends State<cetakpdf> {
 
   Future<void> generateAndPrintPDF(String PenjualanID) async {
     final pdf = pw.Document();
+    final formatCurrency = NumberFormat("#,##0.00", "en_US");
     
     // Ambil data penjualan dari Supabase
     var responseSales = await Supabase.instance.client
@@ -68,11 +70,11 @@ class _cetakpdfState extends State<cetakpdf> {
                 data: responseSalesDetail.map((detail) => [
                   detail['produk']['NamaProduk'],
                   detail['JumlahProduk'].toString(),
-                  detail['Subtotal'].toString()
+                  formatCurrency.format(detail['Subtotal']).toString()
                 ]).toList(),
               ),
               pw.SizedBox(height: 10),
-              pw.Text("Total Harga: ${responseSales['TotalHarga']}", style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
+              pw.Text("Total Harga: ${formatCurrency.format(responseSales['TotalHarga'])}", style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
             ],
           );
         },

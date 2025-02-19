@@ -28,7 +28,7 @@ class _updateprodukState extends State<updateproduk> {
     final data = await Supabase.instance.client
         .from('produk')
         .select()
-        .eq('Produkid', widget.ProdukID)
+        .eq('ProdukID', widget.ProdukID)
         .single();
 
     setState(() {
@@ -46,7 +46,7 @@ class _updateprodukState extends State<updateproduk> {
         'NamaProduk': _nmproduk.text,
         'Harga': _harga.text,
         'Stok': _stok.text,
-      }).eq('Produkid', widget.ProdukID);
+      }).eq('ProdukID', widget.ProdukID);
 
       // Navigasi ke ProdukTab setelah update, dengan menghapus semua halaman sebelumnya dari stack
       Navigator.pushAndRemoveUntil(
@@ -61,9 +61,16 @@ class _updateprodukState extends State<updateproduk> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         title: const Text('Edit Produk'),
+        backgroundColor: Colors.brown[600],
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left, color: Colors.white), // Ganti ikon panah menjadi '<'
+          onPressed: () {
+            Navigator.pop(
+                context, true); // Fungsi untuk kembali ke halaman sebelumnya
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -62,6 +62,14 @@ class _updatepelangganState extends State<updatepelanggan> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Pelanggan'),
+        backgroundColor: Colors.brown[600],
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left, color: Colors.white), // Ganti ikon panah menjadi '<'
+          onPressed: () {
+            Navigator.pop(
+                context, true); // Fungsi untuk kembali ke halaman sebelumnya
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
